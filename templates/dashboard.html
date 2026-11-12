@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Model results | Phishing Email Detector</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body class="top-aligned">
+
+    <div class="container wide">
+
+        <nav class="nav">
+            <a href="{{ url_for('home') }}">Check an email</a>
+            <a href="{{ url_for('dashboard') }}" class="active">Model results</a>
+        </nav>
+
+        <div class="header">
+            <h1>Model results</h1>
+            <p>How each model performed on emails it had never seen.</p>
+        </div>
+
+        {% if not metrics %}
+
+        <div class="result error">
+            <p>No results found yet. Run <code>python phishing_detector.py</code> to train the models, then reload this page.</p>
+        </div>
+
+        {% else %}
+
+        {% set final = metrics.chosen_test_tuned_threshold %}
+        {% set cm = final.confusion_matrix %}
+
+        <section>
+            <h2>Chosen model: {{ metrics.chosen_model }}</h2>
+            <p class="note">
+                Picked by {{ metrics.cv_folds }}-fold cross-validation on {{ metrics.n_train }} training emails,
+                then tested once on {{ metrics.n_test }} unseen emails.
+                An email is flagged as phishing when its phishing probability is at least
+                {{ '%.0f' | format(metrics.threshold * 100) }}%.
+            </p>
+
+            <div class="stats">
+                <div><strong>{{ '%.1f' | format(final.accuracy * 100) }}%</strong><span>Accuracy</span></div>
+                <div><strong>{{ '%.1f' | format(final.precision * 100) }}%</strong><span>Precision</span></div>
+                <div><strong>{{ '%.1f' | format(final.recall * 100) }}%</strong><span>Recall</span></div>
+                <div><strong>{{ '%.1f' | format(final.f1 * 100) }}%</strong><span>F1-score</span></div>
+            </div>
+
+            <p class="note">
+                Out of {{ cm[0][0] + cm[0][1] }} real phishing emails, {{ cm[0][0] }} were caught and {{ cm[0][1] }} were missed.
+                Out of {{ cm[1][0] + cm[1][1] }} safe emails, {{ cm[1][1] }} were correct and {{ cm[1][0] }} were wrongly flagged as phishing.
+            </p>
+        </section>
+
+        <section>
+            <h2>All models compared</h2>
+            <div class="table-wrap">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Model</th>
+                            <th>CV F1</th>
+                            <th>Accuracy</th>
+                            <th>Precision</th>
+                            <th>Recall</th>
+                            <th>F1</th>
+                            <th>ROC-AUC</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for m in metrics.models %}
+                        <tr {% if m.name == metrics.chosen_model %}class="chosen"{% endif %}>
+                            <td>{{ m.name }}</td>
+                            <td>{{ '%.4f' | format(m.cv_f1) }} &plusmn; {{ '%.4f' | format(m.cv_f1_std) }}</td>
+                            <td>{{ '%.4f' | format(m.test.accuracy) }}</td>
+                            <td>{{ '%.4f' | format(m.test.precision) }}</td>
+                            <td>{{ '%.4f' | format(m.test.recall) }}</td>
+                            <td>{{ '%.4f' | format(m.test.f1) }}</td>
+                            <td>{{ '%.4f' | format(m.test.roc_auc) }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            <p class="note">
+                CV F1 comes from cross-validation on the training data (used to choose the model).
+                The other columns come from the test set. Phishing is the positive class.
+            </p>
+        </section>
+
+        {% for p in plots %}
+        <section>
+            <h2>{{ p.title }}</h2>
+            <img class="plot" src="{{ url_for('static', filename='plots/' + p.file) }}" alt="{{ p.title }}">
+        </section>
+        {% endfor %}
+
+        {% endif %}
+
+        <div class="footer">
+            Phishing Email Detection Using Machine Learning
+        </div>
+
+    </div>
+
+</body>
+
+</html>
