@@ -1,0 +1,188 @@
+{
+  "positive_label": "Phishing Email",
+  "n_train": 13666,
+  "n_test": 3417,
+  "cv_folds": 5,
+  "chosen_model": "Ensemble (soft voting)",
+  "threshold": 0.5264704952451031,
+  "models": [
+    {
+      "name": "Logistic Regression",
+      "best_params": {
+        "C": 10
+      },
+      "cv_f1": 0.9666654875118101,
+      "cv_f1_std": 0.0036729080104113535,
+      "test": {
+        "name": "Logistic Regression",
+        "threshold": 0.5,
+        "accuracy": 0.9800995024875622,
+        "precision": 0.9698375870069605,
+        "recall": 0.9773967264224473,
+        "f1": 0.9736024844720497,
+        "roc_auc": 0.9975375485495935,
+        "confusion_matrix": [
+          [
+            1254,
+            29
+          ],
+          [
+            39,
+            2095
+          ]
+        ]
+      }
+    },
+    {
+      "name": "Naive Bayes",
+      "best_params": {
+        "alpha": 0.01
+      },
+      "cv_f1": 0.9533269060286708,
+      "cv_f1_std": 0.0012990185995360418,
+      "test": {
+        "name": "Naive Bayes",
+        "threshold": 0.5,
+        "accuracy": 0.9666374012291484,
+        "precision": 0.9513513513513514,
+        "recall": 0.9602494154325799,
+        "f1": 0.9557796741660202,
+        "roc_auc": 0.9944348305028412,
+        "confusion_matrix": [
+          [
+            1232,
+            51
+          ],
+          [
+            63,
+            2071
+          ]
+        ]
+      }
+    },
+    {
+      "name": "Support Vector Machine",
+      "best_params": {
+        "estimator__C": 1
+      },
+      "cv_f1": 0.9690888440614625,
+      "cv_f1_std": 0.0035942048950346806,
+      "test": {
+        "name": "Support Vector Machine",
+        "threshold": 0.5,
+        "accuracy": 0.9795141937371964,
+        "precision": 0.9741985926505082,
+        "recall": 0.9711613406079501,
+        "f1": 0.9726775956284153,
+        "roc_auc": 0.9976160752570745,
+        "confusion_matrix": [
+          [
+            1246,
+            37
+          ],
+          [
+            33,
+            2101
+          ]
+        ]
+      }
+    },
+    {
+      "name": "Random Forest",
+      "best_params": {
+        "n_estimators": 200
+      },
+      "cv_f1": 0.9532503337196975,
+      "cv_f1_std": 0.0015072685751733152,
+      "test": {
+        "name": "Random Forest",
+        "threshold": 0.5,
+        "accuracy": 0.9634182031021363,
+        "precision": 0.9386363636363636,
+        "recall": 0.965705378020265,
+        "f1": 0.9519784863618901,
+        "roc_auc": 0.9933255951046086,
+        "confusion_matrix": [
+          [
+            1239,
+            44
+          ],
+          [
+            81,
+            2053
+          ]
+        ]
+      }
+    },
+    {
+      "name": "Ensemble (soft voting)",
+      "best_params": {
+        "members": [
+          "Logistic Regression",
+          "Naive Bayes",
+          "Support Vector Machine",
+          "Random Forest"
+        ]
+      },
+      "cv_f1": 0.9698735312220291,
+      "cv_f1_std": 0.003402476135311836,
+      "test": {
+        "name": "Ensemble (soft voting)",
+        "threshold": 0.5,
+        "accuracy": 0.9809774656131109,
+        "precision": 0.9742990654205608,
+        "recall": 0.9750584567420109,
+        "f1": 0.9746786131671211,
+        "roc_auc": 0.998344364813899,
+        "confusion_matrix": [
+          [
+            1251,
+            32
+          ],
+          [
+            33,
+            2101
+          ]
+        ]
+      }
+    }
+  ],
+  "chosen_test_default_threshold": {
+    "name": "Ensemble (soft voting)",
+    "threshold": 0.5,
+    "accuracy": 0.9809774656131109,
+    "precision": 0.9742990654205608,
+    "recall": 0.9750584567420109,
+    "f1": 0.9746786131671211,
+    "roc_auc": 0.998344364813899,
+    "confusion_matrix": [
+      [
+        1251,
+        32
+      ],
+      [
+        33,
+        2101
+      ]
+    ]
+  },
+  "chosen_test_tuned_threshold": {
+    "name": "Ensemble (soft voting) [tuned threshold]",
+    "threshold": 0.5264704952451031,
+    "accuracy": 0.9815627743634767,
+    "precision": 0.9765625,
+    "recall": 0.9742790335151987,
+    "f1": 0.9754194303550526,
+    "roc_auc": 0.998344364813899,
+    "confusion_matrix": [
+      [
+        1250,
+        33
+      ],
+      [
+        30,
+        2104
+      ]
+    ]
+  }
+}

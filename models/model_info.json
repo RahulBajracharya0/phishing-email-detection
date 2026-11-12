@@ -1,0 +1,13 @@
+{
+  "model_name": "Ensemble (soft voting)",
+  "positive_label": "Phishing Email",
+  "threshold": 0.5264704952451031,
+  "best_params": {
+    "members": [
+      "Logistic Regression",
+      "Naive Bayes",
+      "Support Vector Machine",
+      "Random Forest"
+    ]
+  }
+}
