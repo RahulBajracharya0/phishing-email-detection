@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Phishing Email Detector</title>
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+
+    <div class="container">
+
+        <nav class="nav">
+            <a href="{{ url_for('home') }}" class="active">Check an email</a>
+            <a href="{{ url_for('dashboard') }}">Model results</a>
+        </nav>
+
+        <div class="header">
+            <h1>Phishing Email Detector</h1>
+
+            <p>
+                Enter an email below to check whether it is
+                potentially phishing or safe.
+            </p>
+        </div>
+
+        <form method="POST">
+
+            <input
+                class="subject-box"
+                type="text"
+                name="subject"
+                placeholder="Subject (optional)"
+                value="{{ subject }}"
+            >
+
+            <textarea
+                class="email-box"
+                name="email_text"
+                placeholder="Paste or type the email body here..."
+                required
+            >{{ email_text }}</textarea>
+
+            <div class="button-container">
+                <button type="submit">Check Email</button>
+            </div>
+
+        </form>
+
+        {% if error %}
+        <div class="result error">
+            <p>{{ error }}</p>
+        </div>
+        {% endif %}
+
+        {% if prediction %}
+        <div class="result {{ 'phishing' if prediction.is_phishing else 'safe' }}">
+            <h2>Prediction: {{ prediction.label }}</h2>
+            <p>
+                Confidence: {{ prediction.confidence }}%
+                (phishing probability: {{ prediction.phishing_probability }}%)
+            </p>
+        </div>
+        {% endif %}
+
+        <div class="footer">
+            Phishing Email Detection Using Machine Learning
+        </div>
+
+    </div>
+
+</body>
+
+</html>
