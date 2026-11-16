@@ -1,13 +1,30 @@
+/* Dark navy dashboard theme — same class names as before, so your HTML keeps working */
+
+:root {
+    --bg: #1a2540;
+    --bg-deep: #141d33;
+    --card: #1e2a4a;
+    --card-2: #243256;
+    --line: #2f3d63;
+    --text: #e8edf7;
+    --muted: #8d9bbd;
+    --accent: #5bc0de;      /* teal/cyan active color */
+    --red: #e2504c;
+    --yellow: #f0c75e;
+    --green: #8fce7a;
+}
+
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: Arial, sans-serif;
+    font-family: "Segoe UI", Roboto, Arial, sans-serif;
 }
 
 body {
     min-height: 100vh;
-    background: #f4f6f8;
+    background: linear-gradient(180deg, var(--bg) 0%, var(--bg-deep) 100%);
+    color: var(--text);
     display: flex;
     justify-content: center;
     align-items: center;
@@ -16,10 +33,11 @@ body {
 .container {
     width: 90%;
     max-width: 850px;
-    background: white;
+    background: var(--card);
     padding: 40px;
-    border-radius: 15px;
-    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+    border-radius: 6px;
+    border-top: 3px solid var(--accent);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
 }
 
 .header {
@@ -28,29 +46,49 @@ body {
 }
 
 .header h1 {
-    font-size: 32px;
-    color: #222;
+    font-size: 30px;
+    font-weight: 600;
+    color: var(--text);
     margin-bottom: 10px;
 }
 
 .header p {
-    color: #666;
-    font-size: 16px;
+    color: var(--muted);
+    font-size: 15px;
 }
 
-.email-box {
+/* ---- inputs ---- */
+
+.email-box,
+.subject-box {
     width: 100%;
-    min-height: 250px;
-    padding: 18px;
-    border: 2px solid #ddd;
-    border-radius: 10px;
-    resize: vertical;
+    background: var(--bg-deep);
+    color: var(--text);
+    border: 1px solid var(--line);
+    border-radius: 4px;
     font-size: 15px;
     outline: none;
 }
 
-.email-box:focus {
-    border-color: #555;
+.email-box {
+    min-height: 250px;
+    padding: 18px;
+    resize: vertical;
+}
+
+.subject-box {
+    padding: 14px 18px;
+    margin-bottom: 12px;
+}
+
+.email-box::placeholder,
+.subject-box::placeholder {
+    color: var(--muted);
+}
+
+.email-box:focus,
+.subject-box:focus {
+    border-color: var(--accent);
 }
 
 .button-container {
@@ -59,49 +97,49 @@ body {
 }
 
 button {
-    padding: 13px 30px;
-    border: none;
-    border-radius: 8px;
-    background: #222;
-    color: white;
-    font-size: 16px;
+    padding: 13px 34px;
+    border: 1px solid var(--accent);
+    border-radius: 4px;
+    background: transparent;
+    color: var(--accent);
+    font-size: 15px;
+    letter-spacing: 0.5px;
     cursor: pointer;
+    transition: background 0.15s, color 0.15s;
 }
 
 button:hover {
-    background: #444;
+    background: var(--accent);
+    color: var(--bg-deep);
 }
+
+/* ---- results (status cards with colored top bar) ---- */
 
 .result {
     margin-top: 30px;
-    padding: 20px;
-    border-radius: 10px;
+    padding: 22px;
+    border-radius: 4px;
     text-align: center;
-    background: #f1f3f5;
+    background: var(--card-2);
+    border-top: 3px solid var(--accent);
 }
 
-.result.error {
-    background: #fdecea;
-}
-
-.result.error p {
-    color: #b3261e;
-}
-
+.result.error,
 .result.phishing {
-    background: #fdecea;
+    border-top-color: var(--red);
 }
 
+.result.error p,
 .result.phishing h2 {
-    color: #b3261e;
+    color: var(--red);
 }
 
 .result.safe {
-    background: #e8f5e9;
+    border-top-color: var(--green);
 }
 
 .result.safe h2 {
-    color: #1b7a3a;
+    color: var(--green);
 }
 
 .result h2 {
@@ -110,71 +148,52 @@ button:hover {
 }
 
 .result p {
-    color: #666;
+    color: var(--muted);
 }
 
 .footer {
     text-align: center;
     margin-top: 25px;
-    color: #999;
+    color: var(--muted);
     font-size: 13px;
 }
 
-@media (max-width: 600px) {
-    .container {
-        padding: 25px;
-    }
-
-    .header h1 {
-        font-size: 26px;
-    }
-}
-/* ---- navigation, subject box, dashboard ---- */
+/* ---- navigation (tabs like Status / Details) ---- */
 
 .nav {
     display: flex;
-    gap: 20px;
+    gap: 40px;
     justify-content: center;
-    margin-bottom: 25px;
+    margin-bottom: 28px;
+    border-bottom: 1px solid var(--line);
 }
 
 .nav a {
-    color: #666;
+    color: var(--muted);
     text-decoration: none;
-    padding-bottom: 4px;
+    padding: 0 6px 12px;
     border-bottom: 2px solid transparent;
+    margin-bottom: -1px;
 }
 
 .nav a:hover {
-    color: #222;
+    color: var(--text);
 }
 
 .nav a.active {
-    color: #222;
-    border-bottom-color: #222;
-}
-
-.subject-box {
-    width: 100%;
-    padding: 14px 18px;
-    margin-bottom: 12px;
-    border: 2px solid #ddd;
-    border-radius: 10px;
-    font-size: 15px;
-    outline: none;
-}
-
-.subject-box:focus {
-    border-color: #555;
+    color: var(--text);
+    border-bottom-color: var(--accent);
 }
 
 button:focus-visible,
 .nav a:focus-visible,
 .subject-box:focus-visible,
 .email-box:focus-visible {
-    outline: 3px solid #4C72B0;
+    outline: 3px solid var(--accent);
     outline-offset: 2px;
 }
+
+/* ---- dashboard page ---- */
 
 body.top-aligned {
     align-items: flex-start;
@@ -190,38 +209,53 @@ section {
 }
 
 section h2 {
-    font-size: 20px;
-    color: #222;
+    font-size: 18px;
+    font-weight: 600;
+    color: var(--muted);
     margin-bottom: 10px;
 }
 
 .note {
-    color: #666;
+    color: var(--muted);
     font-size: 14px;
     line-height: 1.5;
     margin-top: 10px;
 }
 
+/* stat tiles: 4 cards with colored top borders (red / red / yellow / green) */
 .stats {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 30px;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 16px;
     margin: 20px 0 10px;
 }
 
 .stats div {
     display: flex;
     flex-direction: column;
+    align-items: center;
+    padding: 22px 12px;
+    background: var(--bg-deep);
+    border-top: 3px solid var(--accent);
+    border-radius: 3px;
 }
 
+.stats div:nth-child(4n + 1) { border-top-color: var(--red); }
+.stats div:nth-child(4n + 2) { border-top-color: var(--red); }
+.stats div:nth-child(4n + 3) { border-top-color: var(--yellow); }
+.stats div:nth-child(4n + 4) { border-top-color: var(--green); }
+
 .stats strong {
-    font-size: 30px;
-    color: #222;
+    font-size: 32px;
+    font-weight: 500;
+    color: var(--text);
 }
 
 .stats span {
-    color: #666;
-    font-size: 14px;
+    color: var(--muted);
+    font-size: 13px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
 }
 
 .table-wrap {
@@ -238,7 +272,7 @@ th,
 td {
     padding: 10px 12px;
     text-align: right;
-    border-bottom: 1px solid #e3e6e9;
+    border-bottom: 1px solid var(--line);
     white-space: nowrap;
 }
 
@@ -248,24 +282,43 @@ td:first-child {
 }
 
 th {
-    color: #444;
-    background: #f4f6f8;
+    color: var(--muted);
+    font-weight: 500;
+    background: var(--bg-deep);
 }
 
 tr.chosen td {
     font-weight: bold;
-    background: #eef3fb;
+    color: var(--accent);
+    background: rgba(91, 192, 222, 0.1);
 }
 
+/* plots are probably white-background PNGs, so give them a light frame */
 .plot {
     max-width: 100%;
     height: auto;
-    border: 1px solid #e3e6e9;
-    border-radius: 8px;
+    border: 1px solid var(--line);
+    border-radius: 4px;
+    background: #fff;
 }
 
 code {
-    background: #eee;
+    background: var(--bg-deep);
+    color: var(--accent);
     padding: 2px 6px;
-    border-radius: 4px;
+    border-radius: 3px;
+}
+
+@media (max-width: 600px) {
+    .container {
+        padding: 25px;
+    }
+
+    .header h1 {
+        font-size: 24px;
+    }
+
+    .nav {
+        gap: 20px;
+    }
 }
